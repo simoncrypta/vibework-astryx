@@ -12,9 +12,19 @@ dist
 dist-ssr
 *.local
 
+# Environment variables
+.env
+.dev.vars
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
 .idea
 .DS_Store
 *.suo
@@ -22,6 +32,20 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-!.vscode/
-!.vscode/settings.json
-!.vscode/extensions.json
+
+# TypeScript
+*.tsbuildinfo
+
+# Vite cache
+.vite
+
+# Coverage
+coverage
+
+# Temporary files
+*.tmp
+*.temp
+.tmp
+
+# Wrangler
+.wrangler

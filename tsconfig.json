@@ -2,8 +2,18 @@
   "compilerOptions": {
     "target": "es2023",
     "module": "esnext",
-    "lib": ["ES2023", "DOM"],
-    "types": ["vite-plus/client"],
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "types": [
+      "vite-plus/client",
+      "@cloudflare/workers-types",
+      "./worker-configuration.d.ts",
+      "./types/rw.d.ts",
+      "./types/vite.d.ts"
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "allowArbitraryExtensions": true,
     "skipLibCheck": true,
 
@@ -13,6 +23,10 @@
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
 
     /* Linting */
     "noUnusedLocals": true,
@@ -20,5 +34,6 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": ["src", "types", "worker-configuration.d.ts"],
+  "exclude": ["node_modules", ".tmp"]
 }

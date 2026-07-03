@@ -14,3 +14,61 @@ Docs are local at `node_modules/vite-plus/docs` or online at https://viteplus.de
 - [ ] If setup, runtime, or package-manager behavior looks wrong, run `vp env doctor` and include its output when asking for help.
 
 <!--VITE PLUS END-->
+
+# RedwoodSDK
+
+This app uses [RedwoodSDK](https://docs.rwsdk.com/) (React Server Components on Cloudflare Workers).
+
+- Worker entry: `src/worker.tsx`
+- Client hydration: `src/client.tsx`
+- Pages and document: `src/app/`
+- Deploy: `vp run release` (builds with Vite+, then `wrangler deploy`)
+
+RedwoodSDK docs: https://docs.rwsdk.com/
+Cloudflare Workers docs: https://developers.cloudflare.com/workers
+
+# Astryx + Tailwind (RSC)
+
+This app follows the [Astryx Next.js + Tailwind example](https://github.com/facebook/astryx/tree/main/apps/example-nextjs-tailwind), adapted for RedwoodSDK:
+
+- Global styles: `src/app/styles.css` (layered Astryx + Tailwind + token bridge)
+- Theme provider: `src/app/providers.tsx` (built `neutralTheme` for SSR)
+- Stylesheet is linked from `Document` via `?url` so CSS ships with RSC HTML ([rwsdk Tailwind guide](https://docs.rwsdk.com/guides/frontend/tailwind))
+- Pages stay Server Components; interactive Astryx forms live in small `"use client"` islands
+
+**Styling rules (overrides the generic Astryx agent note about no Tailwind):**
+
+- Astryx components for UI; Tailwind utilities for layout, wrappers, and `className` overrides
+- Prefer token-backed utilities from the bridge (`bg-surface`, `text-primary`, `rounded-lg`, …) over raw hex/px
+- Escape hatch: `bg-[var(--color-background-surface)]` when a token isn't bridged
+
+<!-- ASTRYX:START -->
+
+Astryx v0.1.2 · 148 components
+CLI: run every command as `pnpm exec astryx <cmd>` (shown below as `astryx ...`).
+
+SETUP (once, in your app entry e.g. main.tsx) — without these, components render unstyled:
+import "@astryxdesign/core/reset.css";
+import "@astryxdesign/core/astryx.css";
+
+WORKFLOW — discover, don't guess. Before writing UI:
+
+1. `astryx build "<idea>"` — START HERE: returns a kit (closest [page] + [block]s + [component]s). No args = full playbook.
+2. `astryx template <name> [--skeleton]` — scaffold the [page]/[block]s it named, or study their layout. Templates are reference code.
+3. `astryx component <Name>` — props + examples for every component you use.
+
+RULES:
+
+- No <div> — components do all layout/spacing. Full page → AppShell; sidebar nav → SideNav.
+- Custom styling: component props first; else style/className with tokens — var(--color-_|--spacing-_|--radius-\*). No raw hex/px. (No StyleX/Tailwind compiler here — don't use xstyle/utility classes.)
+- Tokens for every value (`astryx docs tokens`). Brand/accent via `astryx theme` — never override --color-\* in :root.
+
+MORE CLI:
+search "<query>" find any component / hook / doc / template / block
+component --list 148 components by category
+template --list page + block recipes
+docs <topic> color, elevation, icons, illustrations, migration, motion, principles, shape, spacing, styling, theme, tokens, typography
+swizzle <Name> eject component source (--gap reports why)
+upgrade --apply run after any @astryxdesign/core bump
+
+<!-- ASTRYX:END -->
