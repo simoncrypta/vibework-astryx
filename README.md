@@ -6,6 +6,8 @@ Drop in a design, describe what you want, and iterate with an AI coding agent. V
 
 This repo is a **[GitHub public template](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)**. On GitHub, **Use this template** → **Create a new repository** copies everything here into a **new repo** of yours (not a fork). Clone that new repo to work locally.
 
+Based on the DS-agnostic **[vibework](https://github.com/simoncrypta/vibework)** core. Generic stack files sync from tagged vibework releases — see [Syncing from core](#syncing-from-core).
+
 ---
 
 ## System requirements
@@ -167,6 +169,7 @@ src/
     shared/               # BlockStory, TokenGrid, DocsPage helpers
 scripts/
   generate-astryx-stories.mjs
+VARIANT_OWNED.json        # Paths protected from core sync
 .storybook/               # Storybook config
 ```
 
@@ -192,6 +195,21 @@ This repo is tuned for [Cursor](https://cursor.com) Agent mode (Figma → code).
 ```
 
 Then open Agent chat, paste a Figma URL, and ask to implement the screen. Use Storybook to validate component choices against the Astryx catalog.
+
+---
+
+## Syncing from core
+
+Astryx-specific files are listed in [`VARIANT_OWNED.json`](./VARIANT_OWNED.json). Everything else in [`CORE_MANIFEST.json`](https://github.com/simoncrypta/vibework/blob/master/CORE_MANIFEST.json) can be synced from **[vibework](https://github.com/simoncrypta/vibework)**:
+
+```bash
+# Clone both repos as siblings, then from vibework:
+vp run sync:variant -- ../vibework-astryx --dry-run
+vp run sync:variant -- ../vibework-astryx
+vp run sync:variant -- ../vibework-astryx --ref v0.1.0   # tagged core release
+```
+
+After syncing: `vp check && vp test` in this repo. Astryx catalog, demo UI, and `package.json` are never overwritten.
 
 ---
 

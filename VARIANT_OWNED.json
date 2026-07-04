@@ -1,0 +1,23 @@
+{
+  "variant": "astryx",
+  "description": "Paths owned by vibework-astryx. sync-to-variant never overwrites these.",
+  "paths": [
+    "AGENTS.md",
+    "README.md",
+    "VARIANT_OWNED.json",
+    "package.json",
+    "pnpm-lock.yaml",
+    "tsconfig.json",
+    ".cursor/rules/ui-stack.mdc",
+    ".cursor/rules/component-stories.mdc",
+    ".cursor/skills/figma-to-prototype/SKILL.md",
+    "scripts/generate-astryx-stories.mjs",
+    ".storybook/main.ts",
+    ".storybook/preview.tsx",
+    ".storybook/docs.css",
+    "src/app/document.tsx",
+    "src/app/providers.tsx",
+    "src/app/styles.css"
+  ],
+  "globs": ["src/app/pages/**", "src/app/components/**", "src/storybook/**"]
+}
