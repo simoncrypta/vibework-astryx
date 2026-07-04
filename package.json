@@ -19,6 +19,7 @@
     "generate:astryx-stories": "node scripts/generate-astryx-stories.mjs",
     "storybook": "storybook dev -p 6006",
     "storybook-build": "storybook build",
+    "build:starter": "node scripts/build-starter.mjs",
     "prepare": "vp config"
   },
   "dependencies": {
